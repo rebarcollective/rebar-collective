@@ -29,6 +29,16 @@ function useReveal() {
   return ref;
 }
 
+const C = {
+  bg: "#FAFAF8",
+  fg: "#1A1A18",
+  muted: "#8A8A82",
+  accent: "#7C8B9B",
+  accentLight: "#9AABBB",
+  border: "#E5E5E0",
+  surface: "#F0F0EC",
+};
+
 /* ─── Header ─── */
 function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -41,43 +51,70 @@ function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "bg-[var(--color-bg)]/90 backdrop-blur-md border-b border-[var(--color-border)]"
-          : "bg-transparent"
-      }`}
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 50,
+        transition: "all 0.5s",
+        backgroundColor: scrolled ? "rgba(250,250,248,0.9)" : "transparent",
+        backdropFilter: scrolled ? "blur(12px)" : "none",
+        WebkitBackdropFilter: scrolled ? "blur(12px)" : "none",
+        borderBottom: scrolled ? `1px solid ${C.border}` : "1px solid transparent",
+      }}
     >
-      <nav className="max-w-[1200px] mx-auto px-6 md:px-10 flex items-center justify-between h-16 md:h-20">
+      <nav
+        style={{
+          maxWidth: 1200,
+          margin: "0 auto",
+          padding: "0 40px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          height: 80,
+        }}
+      >
         <a
           href="#"
-          className="font-[var(--font-heading)] text-lg md:text-xl tracking-tight"
-          style={{ fontFamily: "var(--font-heading)", fontWeight: 600 }}
+          style={{
+            fontFamily: "'Sora', sans-serif",
+            fontSize: "1.25rem",
+            fontWeight: 600,
+            textDecoration: "none",
+            color: C.fg,
+            letterSpacing: "-0.02em",
+          }}
         >
           Rebar
-          <span
-            className="ml-1"
-            style={{ color: "var(--color-muted)", fontWeight: 300 }}
-          >
+          <span style={{ color: C.muted, fontWeight: 300, marginLeft: 4 }}>
             Collective
           </span>
         </a>
 
-        <div className="flex items-center gap-8">
+        <div style={{ display: "flex", alignItems: "center", gap: 32 }}>
           <a
             href="#about"
-            className="hidden md:inline-block text-sm tracking-wide hover:text-[var(--color-accent)] transition-colors"
-            style={{ fontFamily: "var(--font-body)" }}
+            style={{
+              fontSize: "0.875rem",
+              color: C.fg,
+              textDecoration: "none",
+              letterSpacing: "0.03em",
+            }}
           >
             About
           </a>
           <a
             href="#contact"
-            className="text-sm px-5 py-2.5 rounded-full transition-all duration-300 hover:scale-105"
             style={{
-              fontFamily: "var(--font-body)",
-              backgroundColor: "var(--color-fg)",
-              color: "var(--color-bg)",
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: "0.875rem",
               fontWeight: 500,
+              padding: "10px 20px",
+              borderRadius: 999,
+              backgroundColor: C.fg,
+              color: C.bg,
+              textDecoration: "none",
             }}
           >
             문의하기
@@ -91,42 +128,73 @@ function Header() {
 /* ─── Hero ─── */
 function Hero() {
   return (
-    <section className="relative min-h-[100vh] flex items-center overflow-hidden">
-      {/* Background subtle pattern */}
+    <section
+      style={{
+        position: "relative",
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        overflow: "hidden",
+        backgroundColor: C.bg,
+      }}
+    >
+      {/* Dot pattern */}
       <div
-        className="absolute inset-0 opacity-[0.03]"
         style={{
-          backgroundImage: `radial-gradient(circle at 1px 1px, var(--color-fg) 1px, transparent 0)`,
+          position: "absolute",
+          inset: 0,
+          opacity: 0.03,
+          backgroundImage: `radial-gradient(circle at 1px 1px, ${C.fg} 1px, transparent 0)`,
           backgroundSize: "32px 32px",
         }}
       />
 
-      {/* Accent line */}
+      {/* Top accent line */}
       <div
-        className="absolute top-0 left-0 h-1 animate-fade-in delay-700"
+        className="animate-fade-in delay-700"
         style={{
-          backgroundColor: "var(--color-accent)",
-          animation: "lineExpand 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards",
+          position: "absolute",
+          top: 0,
+          left: 0,
+          height: 4,
+          backgroundColor: C.accent,
+          animation:
+            "lineExpand 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards",
           width: 0,
         }}
       />
 
-      <div className="max-w-[1200px] mx-auto px-6 md:px-10 pt-32 pb-20 md:pt-40 md:pb-32 w-full">
-        <div className="max-w-[800px]">
+      <div
+        style={{
+          maxWidth: 1200,
+          margin: "0 auto",
+          padding: "160px 40px 128px",
+          width: "100%",
+          position: "relative",
+        }}
+      >
+        <div style={{ maxWidth: 800 }}>
           {/* Label */}
           <div
-            className="animate-fade-up delay-100 flex items-center gap-3 mb-8"
+            className="animate-fade-up delay-100"
+            style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 32 }}
           >
             <div
-              className="w-2 h-2 rounded-full"
-              style={{ backgroundColor: "var(--color-accent)" }}
+              style={{
+                width: 8,
+                height: 8,
+                borderRadius: "50%",
+                backgroundColor: C.accent,
+              }}
             />
             <span
-              className="text-xs tracking-[0.2em] uppercase"
               style={{
-                fontFamily: "var(--font-heading)",
-                color: "var(--color-muted)",
+                fontFamily: "'Sora', sans-serif",
+                fontSize: "0.75rem",
                 fontWeight: 500,
+                letterSpacing: "0.2em",
+                textTransform: "uppercase" as const,
+                color: C.muted,
               }}
             >
               Business Growth Consultancy
@@ -135,49 +203,78 @@ function Hero() {
 
           {/* Headline */}
           <h1
-            className="animate-fade-up delay-200 text-[clamp(2.5rem,6vw,4.5rem)] leading-[1.08] tracking-tight mb-8"
-            style={{ fontFamily: "var(--font-heading)", fontWeight: 600 }}
+            className="animate-fade-up delay-200"
+            style={{
+              fontFamily: "'Sora', sans-serif",
+              fontWeight: 600,
+              fontSize: "clamp(2.5rem, 6vw, 4.5rem)",
+              lineHeight: 1.08,
+              letterSpacing: "-0.02em",
+              marginBottom: 32,
+              color: C.fg,
+            }}
           >
             성장을 위한
             <br />
-            <span style={{ color: "var(--color-accent)" }}>구조</span>를
-            <br className="md:hidden" /> 설계합니다
+            <span style={{ color: C.accent }}>구조</span>를 설계합니다
           </h1>
 
-          {/* Subtext */}
+          {/* Sub */}
           <p
-            className="animate-fade-up delay-300 text-lg md:text-xl leading-relaxed max-w-[520px] mb-12"
-            style={{ color: "var(--color-muted)" }}
+            className="animate-fade-up delay-300"
+            style={{
+              fontSize: "1.25rem",
+              lineHeight: 1.7,
+              color: C.muted,
+              maxWidth: 520,
+              marginBottom: 48,
+            }}
           >
             이커머스 마케팅 실행과 체계적인 세일즈 오퍼레이션.
-            <br className="hidden md:block" />
+            <br />
             데이터 기반의 전략으로 비즈니스의 다음 단계를 함께 만듭니다.
           </p>
 
           {/* CTA */}
-          <div className="animate-fade-up delay-400 flex flex-wrap items-center gap-4">
+          <div
+            className="animate-fade-up delay-400"
+            style={{ display: "flex", flexWrap: "wrap" as const, alignItems: "center", gap: 16 }}
+          >
             <a
               href="#contact"
-              className="inline-flex items-center gap-2 text-base px-7 py-3.5 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg"
               style={{
-                fontFamily: "var(--font-heading)",
-                backgroundColor: "var(--color-accent)",
-                color: "white",
+                fontFamily: "'Sora', sans-serif",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 8,
+                fontSize: "1rem",
                 fontWeight: 500,
+                padding: "14px 28px",
+                borderRadius: 999,
+                backgroundColor: C.accent,
+                color: "#fff",
+                textDecoration: "none",
               }}
             >
               프로젝트 문의
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M3.5 8H12.5M12.5 8L8.5 4M12.5 8L8.5 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <path
+                  d="M3.5 8H12.5M12.5 8L8.5 4M12.5 8L8.5 12"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </a>
             <a
               href="#about"
-              className="inline-flex items-center gap-2 text-sm px-6 py-3.5 rounded-full transition-all duration-300 hover:bg-[var(--color-surface)]"
               style={{
-                fontFamily: "var(--font-body)",
-                color: "var(--color-muted)",
-                fontWeight: 400,
+                fontSize: "0.875rem",
+                padding: "14px 24px",
+                borderRadius: 999,
+                color: C.muted,
+                textDecoration: "none",
               }}
             >
               더 알아보기
@@ -185,60 +282,106 @@ function Hero() {
           </div>
         </div>
 
-        {/* Decorative element */}
-        <div className="hidden lg:block absolute right-10 top-1/2 -translate-y-1/2">
-          <div className="animate-fade-in delay-600 relative w-[280px] h-[280px]">
-            <div
-              className="absolute inset-0 rounded-full opacity-10"
-              style={{
-                border: "1px solid var(--color-accent)",
-              }}
-            />
-            <div
-              className="absolute inset-8 rounded-full opacity-20"
-              style={{
-                border: "1px solid var(--color-accent)",
-              }}
-            />
-            <div
-              className="absolute inset-16 rounded-full opacity-30"
-              style={{
-                border: "1px solid var(--color-accent)",
-              }}
-            />
-            <div
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full"
-              style={{ backgroundColor: "var(--color-accent)" }}
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-fade-in delay-700 flex flex-col items-center gap-2">
-        <span
-          className="text-[10px] tracking-[0.15em] uppercase"
-          style={{ color: "var(--color-muted)", fontFamily: "var(--font-heading)" }}
+        {/* Decorative circles - desktop only */}
+        <div
+          className="animate-fade-in delay-600 hero-deco"
+          style={{
+            position: "absolute",
+            right: 40,
+            top: "50%",
+            transform: "translateY(-50%)",
+            width: 280,
+            height: 280,
+          }}
         >
-          Scroll
-        </span>
-        <div className="w-px h-8 bg-[var(--color-border)] relative overflow-hidden">
           <div
-            className="w-px h-4 absolute top-0"
             style={{
-              backgroundColor: "var(--color-accent)",
-              animation: "scrollDown 2s ease-in-out infinite",
+              position: "absolute",
+              inset: 0,
+              borderRadius: "50%",
+              border: `1px solid ${C.accent}`,
+              opacity: 0.1,
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              inset: 32,
+              borderRadius: "50%",
+              border: `1px solid ${C.accent}`,
+              opacity: 0.2,
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              inset: 64,
+              borderRadius: "50%",
+              border: `1px solid ${C.accent}`,
+              opacity: 0.3,
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%,-50%)",
+              width: 12,
+              height: 12,
+              borderRadius: "50%",
+              backgroundColor: C.accent,
             }}
           />
         </div>
       </div>
 
-      <style jsx>{`
-        @keyframes scrollDown {
-          0% { transform: translateY(-16px); }
-          100% { transform: translateY(32px); }
-        }
-      `}</style>
+      {/* Scroll indicator */}
+      <div
+        className="animate-fade-in delay-700"
+        style={{
+          position: "absolute",
+          bottom: 32,
+          left: "50%",
+          transform: "translateX(-50%)",
+          display: "flex",
+          flexDirection: "column" as const,
+          alignItems: "center",
+          gap: 8,
+        }}
+      >
+        <span
+          style={{
+            fontFamily: "'Sora', sans-serif",
+            fontSize: 10,
+            letterSpacing: "0.15em",
+            textTransform: "uppercase" as const,
+            color: C.muted,
+          }}
+        >
+          Scroll
+        </span>
+        <div
+          style={{
+            width: 1,
+            height: 32,
+            backgroundColor: C.border,
+            position: "relative",
+            overflow: "hidden",
+          }}
+        >
+          <div
+            style={{
+              width: 1,
+              height: 16,
+              position: "absolute",
+              top: 0,
+              backgroundColor: C.accent,
+              animation: "scrollDown 2s ease-in-out infinite",
+            }}
+          />
+        </div>
+      </div>
     </section>
   );
 }
@@ -269,89 +412,127 @@ function About() {
     <section
       id="about"
       ref={ref}
-      className="relative py-24 md:py-36"
+      style={{ padding: "96px 0", backgroundColor: C.bg }}
     >
-      <div className="max-w-[1200px] mx-auto px-6 md:px-10">
-        {/* Section header */}
-        <div className="reveal flex items-center gap-4 mb-16 md:mb-24">
-          <div
-            className="h-px flex-grow max-w-[64px]"
-            style={{ backgroundColor: "var(--color-accent)" }}
-          />
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 40px" }}>
+        {/* Section label */}
+        <div
+          className="reveal"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 16,
+            marginBottom: 96,
+          }}
+        >
+          <div style={{ height: 1, width: 64, backgroundColor: C.accent }} />
           <span
-            className="text-xs tracking-[0.2em] uppercase"
             style={{
-              fontFamily: "var(--font-heading)",
-              color: "var(--color-muted)",
+              fontFamily: "'Sora', sans-serif",
+              fontSize: "0.75rem",
               fontWeight: 500,
+              letterSpacing: "0.2em",
+              textTransform: "uppercase" as const,
+              color: C.muted,
             }}
           >
             About Us
           </span>
         </div>
 
-        {/* Main content */}
-        <div className="grid md:grid-cols-[1fr_1fr] gap-16 md:gap-24 mb-24 md:mb-32">
+        {/* Grid */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: 96,
+            marginBottom: 96,
+          }}
+          className="about-grid"
+        >
           <div className="reveal">
             <h2
-              className="text-3xl md:text-[2.75rem] leading-[1.15] tracking-tight mb-6"
-              style={{ fontFamily: "var(--font-heading)", fontWeight: 600 }}
+              style={{
+                fontFamily: "'Sora', sans-serif",
+                fontWeight: 600,
+                fontSize: "2.75rem",
+                lineHeight: 1.15,
+                letterSpacing: "-0.02em",
+                color: C.fg,
+              }}
             >
               성장에는
               <br />
-              <span style={{ color: "var(--color-accent)" }}>구조</span>가 필요합니다
+              <span style={{ color: C.accent }}>구조</span>가 필요합니다
             </h2>
           </div>
 
           <div className="reveal" style={{ transitionDelay: "0.15s" }}>
             <p
-              className="text-base md:text-lg leading-[1.8] mb-6"
-              style={{ color: "var(--color-muted)" }}
+              style={{
+                fontSize: "1.125rem",
+                lineHeight: 1.8,
+                color: C.muted,
+                marginBottom: 24,
+              }}
             >
-              Rebar Collective는 이커머스 브랜드의 성장을 돕는 비즈니스 컨설팅 그룹입니다.
-              콘크리트 속 철근(Rebar)처럼, 보이지 않지만 단단한 구조를 만듭니다.
+              Rebar Collective는 이커머스 브랜드의 성장을 돕는 비즈니스 컨설팅
+              그룹입니다. 콘크리트 속 철근(Rebar)처럼, 보이지 않지만 단단한
+              구조를 만듭니다.
             </p>
-            <p
-              className="text-base md:text-lg leading-[1.8]"
-              style={{ color: "var(--color-muted)" }}
-            >
-              마케팅 실행, 세일즈 프로세스 설계, 운영 자동화까지—
-              데이터에 기반한 전략과 실행력으로 비즈니스의 지속 가능한 성장을 설계합니다.
+            <p style={{ fontSize: "1.125rem", lineHeight: 1.8, color: C.muted }}>
+              마케팅 실행, 세일즈 프로세스 설계, 운영 자동화까지—데이터에 기반한
+              전략과 실행력으로 비즈니스의 지속 가능한 성장을 설계합니다.
             </p>
           </div>
         </div>
 
         {/* Services */}
-        <div className="grid md:grid-cols-3 gap-0 md:gap-0">
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+          }}
+          className="services-grid"
+        >
           {services.map((s, i) => (
             <div
               key={s.num}
-              className="reveal group py-10 md:px-8 first:md:pl-0 last:md:pr-0 border-t md:border-t md:border-l first:md:border-l-0"
+              className="reveal"
               style={{
-                borderColor: "var(--color-border)",
+                padding: "40px 32px",
+                borderTop: `1px solid ${C.border}`,
+                borderLeft: i > 0 ? `1px solid ${C.border}` : "none",
+                paddingLeft: i === 0 ? 0 : 32,
+                paddingRight: i === 2 ? 0 : 32,
                 transitionDelay: `${i * 0.12}s`,
               }}
             >
               <span
-                className="block text-xs mb-4"
                 style={{
-                  fontFamily: "var(--font-heading)",
-                  color: "var(--color-accent)",
+                  display: "block",
+                  fontFamily: "'Sora', sans-serif",
+                  fontSize: "0.75rem",
                   fontWeight: 600,
+                  color: C.accent,
+                  marginBottom: 16,
                 }}
               >
                 {s.num}
               </span>
               <h3
-                className="text-xl mb-3 tracking-tight"
-                style={{ fontFamily: "var(--font-heading)", fontWeight: 600 }}
+                style={{
+                  fontFamily: "'Sora', sans-serif",
+                  fontSize: "1.25rem",
+                  fontWeight: 600,
+                  letterSpacing: "-0.01em",
+                  marginBottom: 12,
+                  color: C.fg,
+                }}
               >
                 {s.title}
               </h3>
-              <p
-                className="text-sm leading-[1.7]"
-                style={{ color: "var(--color-muted)" }}
-              >
+              <p style={{ fontSize: "0.875rem", lineHeight: 1.7, color: C.muted }}>
                 {s.desc}
               </p>
             </div>
@@ -372,41 +553,69 @@ function Contact() {
     setSubmitted(true);
   };
 
+  const inputStyle: React.CSSProperties = {
+    width: "100%",
+    background: "transparent",
+    border: "none",
+    borderBottom: "1px solid rgba(138,138,130,0.3)",
+    padding: "12px 0",
+    fontSize: "1rem",
+    fontFamily: "'DM Sans', sans-serif",
+    color: C.bg,
+    outline: "none",
+  };
+
   return (
     <section
       id="contact"
       ref={ref}
-      className="relative py-24 md:py-36"
-      style={{ backgroundColor: "var(--color-fg)" }}
+      style={{ padding: "96px 0", backgroundColor: C.fg }}
     >
-      <div className="max-w-[1200px] mx-auto px-6 md:px-10">
-        {/* Section header */}
-        <div className="reveal flex items-center gap-4 mb-16 md:mb-24">
-          <div
-            className="h-px flex-grow max-w-[64px]"
-            style={{ backgroundColor: "var(--color-accent)" }}
-          />
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 40px" }}>
+        {/* Section label */}
+        <div
+          className="reveal"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 16,
+            marginBottom: 96,
+          }}
+        >
+          <div style={{ height: 1, width: 64, backgroundColor: C.accent }} />
           <span
-            className="text-xs tracking-[0.2em] uppercase"
             style={{
-              fontFamily: "var(--font-heading)",
-              color: "var(--color-muted)",
+              fontFamily: "'Sora', sans-serif",
+              fontSize: "0.75rem",
               fontWeight: 500,
+              letterSpacing: "0.2em",
+              textTransform: "uppercase" as const,
+              color: C.muted,
             }}
           >
             Contact
           </span>
         </div>
 
-        <div className="grid md:grid-cols-[1fr_1fr] gap-16 md:gap-24">
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: 96,
+          }}
+          className="contact-grid"
+        >
           {/* Left */}
           <div className="reveal">
             <h2
-              className="text-3xl md:text-[2.75rem] leading-[1.15] tracking-tight mb-6"
               style={{
-                fontFamily: "var(--font-heading)",
+                fontFamily: "'Sora', sans-serif",
                 fontWeight: 600,
-                color: "var(--color-bg)",
+                fontSize: "2.75rem",
+                lineHeight: 1.15,
+                letterSpacing: "-0.02em",
+                color: C.bg,
+                marginBottom: 24,
               }}
             >
               함께 성장할
@@ -414,89 +623,97 @@ function Contact() {
               준비가 되셨나요?
             </h2>
             <p
-              className="text-base md:text-lg leading-[1.8] mb-10"
-              style={{ color: "var(--color-muted)" }}
+              style={{
+                fontSize: "1.125rem",
+                lineHeight: 1.8,
+                color: C.muted,
+                marginBottom: 40,
+              }}
             >
               프로젝트에 대해 편하게 이야기해 주세요.
               <br />
               24시간 내에 답변 드리겠습니다.
             </p>
-
-            <div className="flex flex-col gap-4">
-              <a
-                href="mailto:hello@rebarcollective.com"
-                className="inline-flex items-center gap-3 text-sm transition-colors hover:text-[var(--color-accent)]"
-                style={{ color: "var(--color-muted)" }}
+            <a
+              href="mailto:hello@rebarcollective.com"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 12,
+                fontSize: "0.875rem",
+                color: C.muted,
+                textDecoration: "none",
+              }}
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="2" y="4" width="20" height="16" rx="2"/>
-                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
-                </svg>
-                hello@rebarcollective.com
-              </a>
-            </div>
+                <rect x="2" y="4" width="20" height="16" rx="2" />
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+              </svg>
+              hello@rebarcollective.com
+            </a>
           </div>
 
           {/* Right - Form */}
           <div className="reveal" style={{ transitionDelay: "0.15s" }}>
             {!submitted ? (
-              <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+              <form
+                onSubmit={handleSubmit}
+                style={{ display: "flex", flexDirection: "column", gap: 24 }}
+              >
                 <div>
                   <label
-                    className="block text-xs tracking-wide mb-2 uppercase"
                     style={{
-                      fontFamily: "var(--font-heading)",
-                      color: "var(--color-muted)",
+                      display: "block",
+                      fontFamily: "'Sora', sans-serif",
+                      fontSize: "0.75rem",
                       fontWeight: 500,
                       letterSpacing: "0.1em",
+                      textTransform: "uppercase" as const,
+                      color: C.muted,
+                      marginBottom: 8,
                     }}
                   >
                     이름
                   </label>
-                  <input
-                    type="text"
-                    required
-                    className="w-full bg-transparent border-b py-3 text-base outline-none transition-colors focus:border-[var(--color-accent)]"
-                    style={{
-                      borderColor: "rgba(138,138,130,0.3)",
-                      color: "var(--color-bg)",
-                      fontFamily: "var(--font-body)",
-                    }}
-                  />
+                  <input type="text" required style={inputStyle} />
                 </div>
-
                 <div>
                   <label
-                    className="block text-xs tracking-wide mb-2 uppercase"
                     style={{
-                      fontFamily: "var(--font-heading)",
-                      color: "var(--color-muted)",
+                      display: "block",
+                      fontFamily: "'Sora', sans-serif",
+                      fontSize: "0.75rem",
                       fontWeight: 500,
                       letterSpacing: "0.1em",
+                      textTransform: "uppercase" as const,
+                      color: C.muted,
+                      marginBottom: 8,
                     }}
                   >
                     이메일
                   </label>
-                  <input
-                    type="email"
-                    required
-                    className="w-full bg-transparent border-b py-3 text-base outline-none transition-colors focus:border-[var(--color-accent)]"
-                    style={{
-                      borderColor: "rgba(138,138,130,0.3)",
-                      color: "var(--color-bg)",
-                      fontFamily: "var(--font-body)",
-                    }}
-                  />
+                  <input type="email" required style={inputStyle} />
                 </div>
-
                 <div>
                   <label
-                    className="block text-xs tracking-wide mb-2 uppercase"
                     style={{
-                      fontFamily: "var(--font-heading)",
-                      color: "var(--color-muted)",
+                      display: "block",
+                      fontFamily: "'Sora', sans-serif",
+                      fontSize: "0.75rem",
                       fontWeight: 500,
                       letterSpacing: "0.1em",
+                      textTransform: "uppercase" as const,
+                      color: C.muted,
+                      marginBottom: 8,
                     }}
                   >
                     프로젝트 내용
@@ -504,52 +721,79 @@ function Contact() {
                   <textarea
                     rows={4}
                     required
-                    className="w-full bg-transparent border-b py-3 text-base outline-none transition-colors focus:border-[var(--color-accent)] resize-none"
-                    style={{
-                      borderColor: "rgba(138,138,130,0.3)",
-                      color: "var(--color-bg)",
-                      fontFamily: "var(--font-body)",
-                    }}
+                    style={{ ...inputStyle, resize: "none" as const }}
                   />
                 </div>
-
                 <button
                   type="submit"
-                  className="self-start inline-flex items-center gap-2 text-base px-7 py-3.5 rounded-full transition-all duration-300 hover:scale-105 mt-4"
                   style={{
-                    fontFamily: "var(--font-heading)",
-                    backgroundColor: "var(--color-accent)",
-                    color: "white",
+                    alignSelf: "flex-start",
+                    fontFamily: "'Sora', sans-serif",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 8,
+                    fontSize: "1rem",
                     fontWeight: 500,
+                    padding: "14px 28px",
+                    borderRadius: 999,
+                    backgroundColor: C.accent,
+                    color: "#fff",
+                    border: "none",
+                    cursor: "pointer",
+                    marginTop: 16,
                   }}
                 >
                   문의 보내기
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path d="M3.5 8H12.5M12.5 8L8.5 4M12.5 8L8.5 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path
+                      d="M3.5 8H12.5M12.5 8L8.5 4M12.5 8L8.5 12"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
                   </svg>
                 </button>
               </form>
             ) : (
-              <div className="flex flex-col items-start justify-center h-full">
+              <div>
                 <div
-                  className="w-12 h-12 rounded-full flex items-center justify-center mb-6"
-                  style={{ backgroundColor: "var(--color-accent)" }}
+                  style={{
+                    width: 48,
+                    height: 48,
+                    borderRadius: "50%",
+                    backgroundColor: C.accent,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginBottom: 24,
+                  }}
                 >
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="20 6 9 17 4 12"/>
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polyline points="20 6 9 17 4 12" />
                   </svg>
                 </div>
                 <h3
-                  className="text-2xl mb-3"
                   style={{
-                    fontFamily: "var(--font-heading)",
+                    fontFamily: "'Sora', sans-serif",
+                    fontSize: "1.5rem",
                     fontWeight: 600,
-                    color: "var(--color-bg)",
+                    color: C.bg,
+                    marginBottom: 12,
                   }}
                 >
                   감사합니다!
                 </h3>
-                <p style={{ color: "var(--color-muted)" }}>
+                <p style={{ color: C.muted }}>
                   빠른 시일 내에 연락드리겠습니다.
                 </p>
               </div>
@@ -565,25 +809,30 @@ function Contact() {
 function Footer() {
   return (
     <footer
-      className="py-10"
       style={{
-        backgroundColor: "var(--color-fg)",
+        padding: "40px 0",
+        backgroundColor: C.fg,
         borderTop: "1px solid rgba(138,138,130,0.15)",
       }}
     >
-      <div className="max-w-[1200px] mx-auto px-6 md:px-10 flex flex-col md:flex-row items-center justify-between gap-4">
-        <span
-          className="text-xs"
-          style={{ color: "var(--color-muted)", fontFamily: "var(--font-body)" }}
-        >
+      <div
+        style={{
+          maxWidth: 1200,
+          margin: "0 auto",
+          padding: "0 40px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <span style={{ fontSize: "0.75rem", color: C.muted }}>
           © 2025 Rebar Collective. All rights reserved.
         </span>
         <span
-          className="text-xs"
           style={{
-            fontFamily: "var(--font-heading)",
-            color: "var(--color-muted)",
-            fontWeight: 400,
+            fontFamily: "'Sora', sans-serif",
+            fontSize: "0.75rem",
+            color: C.muted,
           }}
         >
           Rebar
@@ -597,12 +846,29 @@ function Footer() {
 /* ─── Page ─── */
 export default function Home() {
   return (
-    <main>
-      <Header />
-      <Hero />
-      <About />
-      <Contact />
-      <Footer />
-    </main>
+    <>
+      <style jsx global>{`
+        @keyframes scrollDown {
+          0% { transform: translateY(-16px); }
+          100% { transform: translateY(32px); }
+        }
+        @media (max-width: 768px) {
+          .hero-deco { display: none !important; }
+          .about-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
+          .about-grid h2 { font-size: 2rem !important; }
+          .services-grid { grid-template-columns: 1fr !important; }
+          .services-grid > div { border-left: none !important; padding-left: 0 !important; padding-right: 0 !important; }
+          .contact-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
+          .contact-grid h2 { font-size: 2rem !important; }
+        }
+      `}</style>
+      <main>
+        <Header />
+        <Hero />
+        <About />
+        <Contact />
+        <Footer />
+      </main>
+    </>
   );
 }
