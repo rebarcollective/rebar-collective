@@ -825,9 +825,14 @@ function Footer() {
           justifyContent: "space-between",
         }}
       >
-        <span style={{ fontSize: "0.75rem", color: C.muted }}>
-          © 2025 Rebar Collective. All rights reserved.
-        </span>
+        <div style={{ display: "flex", flexDirection: "column" as const, gap: 6 }}>
+          <span style={{ fontSize: "0.75rem", color: C.muted }}>
+            © 2025 Rebar Collective. All rights reserved.
+          </span>
+          <span style={{ fontSize: "0.7rem", color: C.muted, opacity: 0.7 }}>
+            경기 수원시 영통구 광교로 146, 안효빌딩 10층 1003호 25번
+          </span>
+        </div>
         <span
           style={{
             fontFamily: "'Sora', sans-serif",
